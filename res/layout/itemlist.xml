@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" android:id="@+id/itemlist_LL_list">
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        
+        android:layout_weight="1"
+        
+        >
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        
+        android:gravity="center_vertical"
+        
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        
+        android:background="@color/gold2"
+        >
+
+        <Button
+            android:id="@+id/itemlist_bt_choose"
+            
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            
+            android:textSize="25dp"
+            
+            android:text="@string/itemlist_bt_choose" 
+            
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            
+            android:layout_weight="1"
+            
+            />
+
+        <Button
+            android:id="@+id/itemlist_bt_see_chosen"
+            
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            
+            android:textSize="25dp"
+            
+            android:text="@string/itemlist_bt_see_chosen" 
+            
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            
+            android:layout_weight="1"
+            
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
