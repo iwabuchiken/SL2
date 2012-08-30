@@ -1,0 +1,22 @@
+a
+cd C:\WORKS\WORKSPACES_ANDROID\SL2
+C:\WORKS\PROGRAMS\FreeMind\FreeMind.exe C:\WORKS\WORKSPACES_ANDROID\FM\SL2.mm
+gitk
+
+[Initial setup]
+copy ..\ImageFileManager6\.gitignore .
+
+[Git]
+g init
+g a .
+
+git log --grep=B4 -3
+git log --grep=B5 -3
+
+
+[Git for mm]
+pushd C:\WORKS\WORKSPACES_ANDROID\FM
+
+[svn]
+pushd C:\WORKS\WORKSPACES_ANDROID\Sample\05_Techbooster
+svn co https://techbooster.googlecode.com/svn/trunk/ContextMenu/ ContextMenu

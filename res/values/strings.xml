@@ -1,7 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, MainActv!</string>
-    <string name="app_name">SL2</string>
+    <!-- generic -->
+	    <string name="generic_register">登録</string>
+	    <string name="generic_ok">OK</string>
+	    <string name="generic_cancel">キャンセル</string>
+	    <string name="generic_message_register">登録してよろしいですか？</string>
+	    <string name="dlg_reconfirm_genre_name">ジャンル名</string>
+	    <string name="generic_title_reconfirm">確認</string>
+	    <string name="generic_label_create">作成</string>
+	    <string name="generic_label_all">すべて</string>
+    
+    
+    <string name="hello">Hello World, ShoppingListActivity!</string>
+    <string name="app_name">ShoppingList</string>
+    <string name="v1_menu_1">Option 1</string>
+    <string name="v1_menu_register_item">品物登録</string>
+    
+    <!-- registeritem.xml -->
+	    <string name="v1_tv_item">品名</string>
+	    <string name="v1_tv_store">お店</string>
+	    <string name="v1_tv_price">価格</string>
+	    <string name="v1_tv_genre">ジャンル</string>
+	    <string name="v1_tv_yomi">よみ</string>
+	    <string name="v1_btn_register">登録</string>
+    
+    <string name="v1_menu_item_list">品物リスト</string>
+    
+    <string name="adapteritem_tv_item_name">品物リスト</string>
+    <string name="adapteritem_tv_store">品物リスト</string>
+    <string name="adapteritem_tv_price">品物リスト</string>
+    <string name="v1_menu_register_shop">店舗登録</string>
+    <string name="dlg_register_store_ok">登録</string>
+    <string name="dlg_register_store_cancel">キャンセル</string>
+    <string name="dlg_register_store_message">店舗の名前をどうぞ</string>
+    <string name="dlg_register_store_title">店舗登録</string>
+    
+    <string name="dlg_input_empty_title">注意！</string>
+    <string name="dlg_input_empty_message">入力がありません</string>
+    <string name="dlg_input_empty_reenter">もう一度入力</string>
+    <string name="dlg_input_empty_cancel">取りやめ</string>
+    
+    <string name="dlg_reconfirm_store_name_title">確認</string>
+    <string name="dlg_reconfirm_store_name_label_store_name">店舗名</string>
+    <string name="dlg_reconfirm_store_name_message_store_name"></string>
+    <string name="dlg_reconfirm_store_name_message_reconfirm">登録してよろしいですか</string>
+    <string name="dlg_reconfirm_store_name_ok">よい</string>
+    <string name="dlg_reconfirm_store_name_cancel">キャンセル</string>
+    <string name="v1_menu_add_genre">ジャンル登録</string>
+    
+    <string name="dlg_register_genre_message">ジャンルの名前をどうぞ</string>
+    <string name="dlg_register_genre_title">ジャンル登録</string>
+    
+    <string name="db_manager_btn_create_table">テーブル作成</string>
+    <string name="db_manager_btn_drop_table">テーブル削除</string>
+    <string name="v1_menu_db_manager">データベース</string>
+    
+    <!-- db_manager.xml -->
+    <string name="dlg_create_table_title">テーブル作成</string>
+    <string name="dlg_create_table_label_column_name">カラム名</string>
+    <string name="dlg_create_table_label_data_type">データ・タイプ</string>
+    <string name="dlg_create_table_label_table_name">テーブル名</string>
+    <string name="dlg_drop_table_title">テーブル削除</string>
+    <string name="dlg_confirm_drop_table_tv_message_drop">このテーブルを削除しますか？</string>
+    
+    <!-- ItemList.java -->
+    <string name="menu_listitem_filter">フィルター</string>
+    
+    <!-- dlg_filter_list.xml -->
+    <string name="dlg_filter_list_tv_title">フィルター</string>
+    <string name="dlg_filter_list_tv_store">店舗</string>
+    <string name="dlg_filter_list_tv_genre">ジャンル</string>
+    <string name="dlg_filter_list_tv_history">フィルター履歴</string>
 
+    <!-- shoppinglist.xml -->
+    	<string name="sl_tv_item_list">品物リスト</string>
+    	<string name="sl_tv_item_register">登録</string>
+    	<string name="sl_tv_item_db">データベース</string>
+    
+    <!-- dlg_register_main.xml -->
+    	<string name="dlg_register_main_items">品物</string>
+    	<string name="dlg_register_main_stores">店舗</string>
+    	<string name="dlg_register_main_genres">ジャンル</string>
+    	
+    	
+    <!-- itemlist.xml -->
+    	<string name="itemlist_bt_choose">確定</string>
+    	<string name="itemlist_bt_see_chosen">見る</string>
+    	
 </resources>
