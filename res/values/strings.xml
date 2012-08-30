@@ -10,6 +10,7 @@
 	    <string name="generic_title_reconfirm">確認</string>
 	    <string name="generic_label_create">作成</string>
 	    <string name="generic_label_all">すべて</string>
+	    <string name="generic_label_quit">終了</string>
     
     
     <string name="hello">Hello World, ShoppingListActivity!</string>
