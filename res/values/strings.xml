@@ -13,8 +13,8 @@
 	    <string name="generic_label_quit">終了</string>
     
     
-    <string name="hello">Hello World, ShoppingListActivity!</string>
-    <string name="app_name">ShoppingList</string>
+    <string name="hello">Hello World, SL2Activ!</string>
+    <string name="app_name">SL2</string>
     <string name="v1_menu_1">Option 1</string>
     <string name="v1_menu_register_item">品物登録</string>
     

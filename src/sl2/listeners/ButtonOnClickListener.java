@@ -55,7 +55,7 @@ public class ButtonOnClickListener implements OnClickListener {
 		vib = (Vibrator) actv.getSystemService(actv.VIBRATOR_SERVICE);
 	}
 
-	@Override
+//	@Override
 	public void onClick(View v) {
 //		//
 //		Methods.ButtonTags tag_name = (Methods.ButtonTags) v.getTag();

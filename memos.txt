@@ -1,6 +1,6 @@
 a
-cd C:\WORKS\WORKSPACES_ANDROID\SL2
-C:\WORKS\PROGRAMS\FreeMind\FreeMind.exe C:\WORKS\WORKSPACES_ANDROID\FM\SL2.mm
+cd C:\WORKS\WS\WS_Android~\SL2
+C:\WORKS\PROGRAMS\FreeMind\FreeMind.exe C:\WORKS\WS\WS_Android\FM\SL2\SL2.mm
 gitk
 
 [Initial setup]

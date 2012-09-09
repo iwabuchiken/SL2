@@ -57,7 +57,7 @@ public class CustomOnItemLongClickListener implements OnItemLongClickListener {
 	/****************************************
 	 * Methods
 	 ****************************************/
-	@Override
+//	@Override
 	public boolean onItemLongClick(
 										AdapterView<?> parent, View v,
 										int position, long id) {
