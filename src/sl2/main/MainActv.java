@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import sl2.items.SI;
@@ -371,6 +373,8 @@ public class MainActv extends ListActivity {
 		 * 4. Build list
 		 * 5. Close db
 		 * 
+		 * 5-1. Sort list
+		 * 
 		 * 6. Set up adapter
 		 * 7. Set adapter
 		 * 
@@ -445,6 +449,13 @@ public class MainActv extends ListActivity {
 		 *********************************/
 		rdb.close();
 		
+		
+		/*********************************
+		 * 5-1. Sort list
+		 *********************************/
+		
+		this.sort_list(list);
+		
 		/*********************************
 		 * 6. Set up adapter
 		 *********************************/
@@ -460,6 +471,62 @@ public class MainActv extends ListActivity {
 		setListAdapter(adapter);
 		
 	}//private void setList()
+
+	private void sort_list(List<SI> list) {
+		/*********************************
+		 * 1. Set up comparator
+		 * 2. Sort list
+		 *********************************/
+		/*********************************
+		 * 1. Set up comparator
+		 *********************************/
+		Comparator<SI> siComparator = new Comparator<SI>() {
+
+			public int compare(SI s1, SI s2) {
+				
+//				if (s1.getYomi() != null && s2.getYomi() != null) {
+//				if (s1.getYomi() != "" && s2.getYomi() != "") {
+				
+//				if (!s1.getYomi().equals("") && !s2.getYomi().equals("")) {
+//				
+//					
+//					// Log
+//					Log.d("Methods.java"
+//							+ "["
+//							+ Thread.currentThread().getStackTrace()[2]
+////									.getLineNumber() + "]", "s1.getYomi() != null && s2.getYomi() != null");
+//									.getLineNumber() + "]", "s1.getYomi() != \"\" && s2.getYomi() != \"\"");
+//					
+//					// Log
+//					Log.d("Methods.java"
+//							+ "["
+//							+ Thread.currentThread().getStackTrace()[2]
+//									.getLineNumber() + "]", "s1.getYomi().length()" + s1.getYomi().length());
+//					
+//					return s1.getYomi().compareTo(s2.getYomi());
+//					
+//				} else {//if (s1.getYomi() != null && s2.getYomi() != null)
+					
+					// Log
+					Log.d("Methods.java"
+							+ "["
+							+ Thread.currentThread().getStackTrace()[2]
+									.getLineNumber() + "]", "else");
+					
+					return s1.getName().compareTo(s2.getName());
+					
+//				}//if (s1.getYomi() != null && s2.getYomi() != null)
+			
+			}//public int compare(SI s1, SI s2)
+			
+		};//Comparator<SI> siComparator = new Comparator<SI>()
+		
+		/*********************************
+		 * 2. Sort list
+		 *********************************/
+		Collections.sort(list, siComparator);
+		
+	}//private void sort_list(List<SI> list)
 
 	private Cursor _query_items(SQLiteDatabase rdb) {
 		

@@ -49,17 +49,27 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:id="@+id/adapteritem_LL_store_and_price">
+        android:layout_height="wrap_content" 
+        
+        android:id="@+id/adapteritem_LL_store_and_price"
+        
+		android:layout_marginBottom="3dp"
+		android:layout_marginTop="5dp"
+		android:layout_marginLeft="5dp"
+		android:layout_marginRight="5dp"
+        
+        
+        >
 
         <TextView
             android:id="@+id/adapteritem_tv_store"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:textSize="20dp"/>
 
         <TextView
             android:id="@+id/adapteritem_tv_price"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:textSize="20dp"/>
 
