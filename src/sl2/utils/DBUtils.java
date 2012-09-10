@@ -158,14 +158,26 @@ public class DBUtils extends SQLiteOpenHelper{
 		
 		/*----------------------------
 		 * 2. Build sql
+		 * 	1. Default data
+		 * 	2. Specific data
 			----------------------------*/
-		//
+		/*********************************
+		 * 2.1. Default data
+		 *********************************/
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("CREATE TABLE " + tableName + " (");
 		sb.append(android.provider.BaseColumns._ID +
 							" INTEGER PRIMARY KEY AUTOINCREMENT, ");
+
+		String time_data = "created_at INTEGER, modified_at INTEGER, ";
 		
+		sb.append(time_data);
+
+		
+		/*********************************
+		 * 2.2. Specific data
+		 *********************************/
 		int i = 0;
 		for (i = 0; i < columns.length - 1; i++) {
 			sb.append(columns[i] + " " + types[i] + ", ");
@@ -499,6 +511,68 @@ public class DBUtils extends SQLiteOpenHelper{
 		//return false;
 		
 	}//public insertData(String tableName, String[] columnNames, String[] values)
+
+	public boolean insertData_item(SQLiteDatabase wdb, String tableName, 
+			String[] columnNames, Object[] values) {
+		/*----------------------------
+		* 1. Insert data
+		----------------------------*/
+//		"name", "yomi", "store", "price", "genre"
+		
+		try {
+			// Start transaction
+			wdb.beginTransaction();
+			
+			// ContentValues
+			ContentValues val = new ContentValues();
+			
+			// Put values
+			val.put("created_at", (Long) Methods.getMillSeconds_now());		// created_at
+			val.put("modified_at", (Long) Methods.getMillSeconds_now());		// modified_at
+			
+			val.put(columnNames[0], (String) values[0]);		// name
+			val.put(columnNames[1], (String) values[1]);		// yomi
+			
+			val.put(columnNames[2], (String) values[2]);		// store
+			
+			val.put(columnNames[3], (Long) values[3]);		// price
+			
+			val.put(columnNames[4], (String) values[4]);		// genre
+			
+//			for (int i = 0; i < columnNames.length; i++) {
+//			val.put(columnNames[i], values[i]);
+//			}//for (int i = 0; i < columnNames.length; i++)
+			
+			// Insert data
+			wdb.insert(tableName, null, val);
+			
+			// Set as successful
+			wdb.setTransactionSuccessful();
+			
+			// End transaction
+			wdb.endTransaction();
+			
+			// Log
+			Log.d("DBUtils.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Transaction => Ends");
+			
+			
+			return true;
+		
+		} catch (Exception e) {
+			// Log
+			Log.e("DBUtils.java" + "["
+			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+			+ "]", "Exception! => " + e.toString());
+			
+			return false;
+		}//try
+		
+		////debug
+		//return false;
+		
+	}//public insertData_item(String tableName, String[] columnNames, String[] values)
 
 	public boolean deleteData(Activity actv, SQLiteDatabase db, String tableName, long file_id) {
 		/*----------------------------

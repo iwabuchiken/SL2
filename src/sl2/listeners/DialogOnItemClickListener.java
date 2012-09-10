@@ -1,5 +1,7 @@
 package sl2.listeners;
 
+import sl2.main.R;
+import sl2.utils.Methods;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -41,17 +43,60 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		 * 3. Switching
 			----------------------------*/
 		
-//		Methods.DialogOnItemClickTags tag = (Methods.DialogOnItemClickTags) parent.getTag();
-//		
-//		vib.vibrate(Methods.vibLength_click);
+		Methods.DialogItemTags tag = (Methods.DialogItemTags) parent.getTag();
+		
+		vib.vibrate(Methods.vibLength_click);
 		
 		/*----------------------------
 		 * 3. Switching
 			----------------------------*/
-//		switch (tag) {
+		switch (tag) {
 		
+		case dlg_register_main:
+			/*********************************
+			 * 1. Get item
+			 * 2. Switch
+			 *********************************/
+			String choice = (String) parent.getItemAtPosition(position);
+
+//			// debug
+//			Toast.makeText(actv, choice, 2000).show();
+//			
+			/*********************************
+			 * 2. Switch
+			 * 	1. Item
+			 * 	2. Store
+			 * 	3. Genre
+			 *********************************/
+			/*********************************
+			 * 2.1. Item
+			 *********************************/
+			if (choice.equals(actv.getString(R.string.dlg_register_main_items))) {
+				
+				dlg.dismiss();
+				
+				Methods.register_items(actv);
+				
+			} else if (choice.equals(actv.getString(R.string.dlg_register_main_stores))) {
+			/*********************************
+			 * 2.2. Store
+			 *********************************/
 			
-//		}//switch (tag)
+			} else if (choice.equals(actv.getString(R.string.dlg_register_main_genres))) {
+			/*********************************
+			 * 2.3. Genre
+			 *********************************/
+				
+			}//if (choice.equals(actv.getString(R.string.dlg_register_main_items)))
+			
+			
+			
+			
+			
+			
+			break;
+			
+		}//switch (tag)
 		
 	}//public void onItemClick(AdapterView<?> parent, View v, int position, long id)
 }

@@ -11,14 +11,20 @@ import java.util.List;
 
 import sl2.items.SI;
 import sl2.utils.DBUtils;
+import sl2.utils.ItemListAdapter;
+import sl2.utils.Methods;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,19 +36,45 @@ public class MainActv extends ListActivity {
 	 * DB
 	 *********************************/
 	public static String dbName = "sl2.db";
+
+	// shopping_item
 	public static String tableName_shopping_item
 								= "shopping_item";
-	
-	// shopping_item
 	static String[] cols_shopping_item = 
 				{"name", "yomi", "store", "price", "genre"};
 	static String[] col_types_shopping_item = 
 				{"TEXT", "TEXT", "TEXT", "INTEGER", "TEXT"};
 	
+	// stores
+	public static String tableName_stores =
+					"stores";
+	static String[] cols_stores = 
+					{"store_name", 	"memo"};
+	static String[] col_types_stores = 
+					{"TEXT", 		"TEXT"};
+
+	// genres
+	public static String tableName_genres =
+					"genres";
+	static String[] cols_genres = 
+					{"genre_name", 	"memo"};
+
+
+	static String[] col_types_genres = 
+					{"TEXT", 		"TEXT"};
+
 	/*********************************
-	 * List
+	 * List-related
 	 *********************************/
 	public static List<SI> list;
+	
+	public static ItemListAdapter adapter;
+
+	/*********************************
+	 * Request codes
+	 *********************************/
+	public final static int REQUEST_CODE_REGISTER_ITEMS = 0;
+	
 	
     /** Called when the activity is first created. */
     @Override
@@ -71,11 +103,70 @@ public class MainActv extends ListActivity {
 //        restore_db();
 //        see_db();
 //        get_column_names();
+//        get_column_names(MainActv.tableName_stores);
+//        get_column_names(MainActv.tableName_genres);
+//      get_column_names(MainActv.tableName_shopping_item);
 //        drop_table_shopping_item();
         
 
     }//public void onCreate(Bundle savedInstanceState)
 
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+    	MenuInflater mi = getMenuInflater();
+		mi.inflate(R.menu.opt_menu_main_actv, menu);
+
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO 自動生成されたメソッド・スタブ
+		super.onDestroy();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+		switch (item.getItemId()) {
+		case R.id.opt_menu_main_actv_register://---------------
+			
+			Methods.dlg_register_main(this);
+			
+			break;// case R.id.opt_menu_main_actv_register
+		
+		}//switch (item.getItemId())
+
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO 自動生成されたメソッド・スタブ
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO 自動生成されたメソッド・スタブ
+		super.onResume();
+		
+	}//protected void onResume()
+
+	@Override
+	protected void onStart() {
+		// TODO 自動生成されたメソッド・スタブ
+		super.onStart();
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO 自動生成されたメソッド・スタブ
+		super.onStop();
+	}
+    
     private void drop_table_shopping_item() {
     	// Setup db
 		DBUtils dbu = new DBUtils(this, MainActv.dbName);
@@ -129,6 +220,35 @@ public class MainActv extends ListActivity {
         }
 		
 	}
+
+	private void get_column_names(String tableName) {
+    	// REF=> http://stackoverflow.com/questions/2382528/how-to-get-a-tables-columns-arraylist-on-android/2383705#2383705
+    	// 		=> REF by => http://stackoverflow.com/questions/5838432/android-sqlite-get-the-column-names
+    	//		=> Searched by => "android sqlite column names"
+    	// Setup db
+		DBUtils dbu = new DBUtils(this, MainActv.dbName);
+		
+		SQLiteDatabase rdb = dbu.getReadableDatabase();
+
+    	Cursor ti = rdb.rawQuery("PRAGMA table_info(" + tableName + ")", null);
+    	
+    	// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "Table: " + tableName);
+    	
+        if ( ti.moveToFirst() ) {
+            do {
+//                System.out.println("col: " + ti.getString(1));
+            	// Log
+				Log.d("MainActv.java"
+						+ "["
+						+ Thread.currentThread().getStackTrace()[2]
+								.getLineNumber() + "]", "col: " + ti.getString(1));
+            } while (ti.moveToNext());
+        }
+		
+	}//private void get_column_names(String tableName)
 
 	private void see_db() {
 		/*********************************
@@ -249,8 +369,11 @@ public class MainActv extends ListActivity {
 		 * 3. Query
 		 * 
 		 * 4. Build list
+		 * 5. Close db
 		 * 
-		 * 9. Close db
+		 * 6. Set up adapter
+		 * 7. Set adapter
+		 * 
 		 *********************************/
     	/*********************************
 		 * 1. Set up db
@@ -291,6 +414,55 @@ public class MainActv extends ListActivity {
 		/*********************************
 		 * 3. Query
 		 *********************************/
+		Cursor c = _query_items(rdb);
+		
+		if (c == null) {
+			
+			// debug
+			Toast.makeText(this, "Query failed!", 2000).show();
+			
+			rdb.close();
+			
+			return;
+			
+		}//if (c == null)
+		
+		/*********************************
+		 * 4. Build list
+		 *********************************/
+		list = _build_list(c);
+
+		
+		
+		// Log
+		Log.d("MainActv.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]",
+				"MainActv.list.size(): " + MainActv.list.size());
+		
+		/*********************************
+		 * 5. Close db
+		 *********************************/
+		rdb.close();
+		
+		/*********************************
+		 * 6. Set up adapter
+		 *********************************/
+		adapter = new ItemListAdapter(
+				this,
+				R.layout.adapteritem,
+				list
+				);
+
+		/*********************************
+		 * 7. Set adapter
+		 *********************************/
+		setListAdapter(adapter);
+		
+	}//private void setList()
+
+	private Cursor _query_items(SQLiteDatabase rdb) {
+		
 		String sql = "SELECT * FROM " + MainActv.tableName_shopping_item;
 		
 		Cursor c = rdb.rawQuery(sql, null);
@@ -304,7 +476,7 @@ public class MainActv extends ListActivity {
 			
 			rdb.close();
 			
-			return;
+			return null;
 			
 		} else if (c.getCount() < 1) {
 			
@@ -313,27 +485,13 @@ public class MainActv extends ListActivity {
 			
 			rdb.close();
 			
-			return;
+			return null;
 			
 		}//if (c == null)
-		
-		/*********************************
-		 * 4. Build list
-		 *********************************/
-		list = _build_list(c);
 
-		// Log
-		Log.d("MainActv.java" + "["
-				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-				+ "]",
-				"MainActv.list.size(): " + MainActv.list.size());
+		return c;
 		
-		/*********************************
-		 * 9. Close db
-		 *********************************/
-		rdb.close();
-		
-	}//private void setList()
+	}//private Cursor _query_items()
 
 	private List<SI> _build_list(Cursor c) {
 		// TODO Auto-generated method stub
@@ -344,15 +502,19 @@ public class MainActv extends ListActivity {
 		for (int i = 0; i < c.getCount(); i++) {
 			//{"name", "yomi", "store", "price", "genre"}
 			// Log
-			Log.d("ItemList.java" + "["
+			Log.d("MainActv.java" + "["
 					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 					+ "]",
 					"c.getInt(0): " + c.getInt(0) + "/" +		// _id
-					"c.getString(1): " + c.getString(1) + "/" +	// name
-					"c.getString(2): " + c.getString(2) + "/" +	// yomi
-					"c.getString(3): " + c.getString(3) + "/" +		// store
-					"c.getInt(4): " + c.getInt(4) + "/" +		// price
-					"c.getString(5): " + c.getString(5)			// genre
+					"c.getLong(1): " + c.getLong(1) + "/" +		// created_at
+					"c.getLong(2): " + c.getLong(2) + "/" +		// modified_at
+					
+					"c.getString(3): " + c.getString(3) + "/" +	// name
+					"c.getString(4): " + c.getString(4) + "/" +	// yomi
+					"c.getString(5): " + c.getString(5) + "/" +		// store
+					
+					"c.getInt(6): " + c.getInt(6) + "/" +		// price
+					"c.getString(7): " + c.getString(7)			// genre
 					);
 			
 //			09-09 22:44:23.136: D/Methods.java[85](6668): col: _id
@@ -364,12 +526,17 @@ public class MainActv extends ListActivity {
 
 			//
 			SI item = new SI(
-									c.getString(1),		// store
-									c.getString(2),		// name
-									c.getString(3),		// yomi
-									c.getInt(4),			// price
-									c.getString(5),		// genre
-									c.getInt(0)				// _id
+									c.getString(3),		// store
+									c.getString(4),		// name
+									c.getString(5),		// yomi
+									
+									c.getInt(6),			// price
+									c.getString(7),		// genre
+									
+									c.getInt(0),				// _id
+									c.getLong(1),				// _id
+									c.getLong(2)				// _id
+									
 									);
 			
 			//
@@ -508,5 +675,73 @@ public class MainActv extends ListActivity {
 		}//try
     	
 	}//private void restore_db()
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "resultCode: " + resultCode);
+		
+		switch (requestCode) {
+		
+		case MainActv.REQUEST_CODE_REGISTER_ITEMS:
+			
+			switch (resultCode) {
+			
+			case RESULT_OK:
+				
+				// debug
+				Toast.makeText(this, "RESULT_OK", 2000).show();
+				
+				this.setList();
+				
+				break;
+			
+			case RESULT_CANCELED:
+				
+				// debug
+				Toast.makeText(this, "RESULT_CANCELED", 2000).show();
+				
+				this.setList();
+				
+				break;
+				
+				
+			default:
+				
+				// debug
+				Toast.makeText(this, "Not RESULT_OK: " + resultCode, 2000).show();
+				
+				break;
+				
+			}//switch (resultCode)
+			
+			break;
+			
+		default:
+			break;
+		
+		}//switch (requestCode)
+		
+//		if (requestCode == MainActv.REQUEST_CODE_REGISTER_ITEMS) {
+//			
+//			// debug
+//			Toast.makeText(this, "You're from 'RegisterItemActv'", 2000).show();
+//			
+//		} else {//if (requestCode == MainActv.REQUEST_CODE_REGISTER_ITEMS)
+//
+//			// debug
+//			Toast.makeText(this, "You're from ?", 2000).show();
+//			
+//		}//if (requestCode == MainActv.REQUEST_CODE_REGISTER_ITEMS)
+		
+		
+		
+//		super.onActivityResult(requestCode, resultCode, data);
+		
+		
+	}//protected void onActivityResult(int requestCode, int resultCode, Intent data)
 
 }//public class MainActv extends ListActivity

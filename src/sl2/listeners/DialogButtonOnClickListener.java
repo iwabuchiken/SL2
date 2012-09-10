@@ -1,5 +1,6 @@
 package sl2.listeners;
 
+import sl2.utils.Methods;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Vibrator;
@@ -60,24 +61,25 @@ public class DialogButtonOnClickListener implements OnClickListener {
 
 //	@Override
 	public void onClick(View v) {
-		//
-//		Methods.DialogTags tag_name = (Methods.DialogTags) v.getTag();
+		
+		Methods.DialogButtonTags tag_name = (Methods.DialogButtonTags) v.getTag();
 
 		//
-//		switch (tag_name) {
+		switch (tag_name) {
 		
-//		case dlg_generic_dismiss://------------------------------------------------
-//			
-//			vib.vibrate(Methods.vibLength_click);
-//			
-//			dlg.dismiss();
-//			
-//			break;
+		case dlg_generic_dismiss://------------------------------------------------
+			
+			vib.vibrate(Methods.vibLength_click);
+			
+			dlg.dismiss();
+			
+			break;
 			
 
-//		default: // ----------------------------------------------------
-//			break;
-//		}//switch (tag_name)
-	}
+		default: // ----------------------------------------------------
+			break;
+		}//switch (tag_name)
+		
+	}//public void onClick(View v)
 
 }

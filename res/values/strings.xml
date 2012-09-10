@@ -18,6 +18,9 @@
     <string name="v1_menu_1">Option 1</string>
     <string name="v1_menu_register_item">品物登録</string>
     
+    <!-- opt_menu_main_actv.xml -->
+    	<string name="opt_menu_main_actv_register_item">品物登録</string>
+    
     <!-- registeritem.xml -->
 	    <string name="v1_tv_item">品名</string>
 	    <string name="v1_tv_store">お店</string>

@@ -54,6 +54,10 @@ import org.apache.commons.lang.StringUtils;
 
 import sl2.listeners.DialogButtonOnClickListener;
 import sl2.listeners.DialogButtonOnTouchListener;
+import sl2.listeners.DialogOnItemClickListener;
+import sl2.main.MainActv;
+import sl2.main.R;
+import sl2.main.RegisterItemActv;
 
 public class Methods {
 
@@ -63,7 +67,7 @@ public class Methods {
 	/****************************************
 	 * Enums
 	 ****************************************/
-	public static enum DialogTags {
+	public static enum DialogButtonTags {
 		// Generics
 		dlg_generic_dismiss, dlg_generic_dismiss_second_dialog, dlg_generic_dismiss_third_dialog,
 		
@@ -116,9 +120,12 @@ public class Methods {
 		// dlg_confirm_delete_patterns.xml
 		dlg_confirm_delete_patterns_ok,
 		
-	}//public static enum DialogTags
+	}//public static enum DialogButtonTags
 	
 	public static enum DialogItemTags {
+		// dlg_register_main.xml
+		dlg_register_main,
+		
 		// dlg_moveFiles(Activity actv)
 		dlg_move_files,
 		
@@ -717,7 +724,7 @@ public class Methods {
 	}//public static boolean set_pref(String pref_name, String value)
 
 	public static Dialog dlg_template_cancel(Activity actv, int layoutId, int titleStringId,
-			int cancelButtonId, DialogTags cancelTag) {
+			int cancelButtonId, DialogButtonTags cancelTag) {
 		/*----------------------------
 		* Steps
 		* 1. Set up
@@ -760,7 +767,7 @@ public class Methods {
 	}//public static Dialog dlg_template_okCancel()
 
 	public static Dialog dlg_template_okCancel(Activity actv, int layoutId, int titleStringId,
-			int okButtonId, int cancelButtonId, DialogTags okTag, DialogTags cancelTag) {
+			int okButtonId, int cancelButtonId, DialogButtonTags okTag, DialogButtonTags cancelTag) {
 		/*----------------------------
 		* Steps
 		* 1. Set up
@@ -900,5 +907,86 @@ public class Methods {
 		return sdf1.format(new Date(millSec));
 		
 	}//public static String get_TimeLabel(long millSec)
+
+	public static void dlg_register_main(Activity actv) {
+		/*----------------------------
+		 * Steps
+		 * 1. Get a dialog
+		 * 2. List view
+		 * 3. Set listener => list
+		 * 9. Show dialog
+			----------------------------*/
+		 
+		Dialog dlg = dlg_template_cancel(actv, 
+				R.layout.dlg_register_main, R.string.generic_register,
+				R.id.dlg_register_main_btn_cancel,
+				Methods.DialogButtonTags.dlg_generic_dismiss);
+		
+		/*----------------------------
+		 * 2. List view
+		 * 		1. Get view
+		 * 		2. Prepare list data
+		 * 		3. Prepare adapter
+		 * 		4. Set adapter
+			----------------------------*/
+		ListView lv = (ListView) dlg.findViewById(R.id.dlg_register_main_lv_list);
+		
+		/*----------------------------
+		 * 2.2. Prepare list data
+			----------------------------*/
+		List<String> registerItems = new ArrayList<String>();
+		
+		registerItems.add(actv.getString(R.string.dlg_register_main_items));
+		registerItems.add(actv.getString(R.string.dlg_register_main_stores));
+		registerItems.add(actv.getString(R.string.dlg_register_main_genres));
+
+		/*********************************
+		 * 2.3. Prepare adapter
+		 *********************************/
+		ArrayAdapter<String> adp = new ArrayAdapter<String>(
+				actv,
+				android.R.layout.simple_list_item_1,
+//				R.layout.list_row_dlg_register_main,
+				registerItems
+				);
+
+		/*----------------------------
+		 * 2.4. Set adapter
+			----------------------------*/
+		lv.setAdapter(adp);
+
+		lv.setTag(Methods.DialogItemTags.dlg_register_main);
+		
+		/*----------------------------
+		 * 3. Set listener => list
+			----------------------------*/
+		lv.setOnItemClickListener(
+				new DialogOnItemClickListener(
+						actv, 
+						dlg));
+
+		
+		/*----------------------------
+		 * 9. Show dialog
+			----------------------------*/
+		dlg.show();
+		
+	}//public static void dlg_register_main(Activity actv)
+
+	public static void register_items(Activity actv) {
+		/*********************************
+		 * memo
+		 *********************************/
+		Intent i = new Intent();
+		
+		//
+		i.setClass(actv, RegisterItemActv.class);
+		
+		//
+//		actv.startActivity(i);
+		actv.startActivityForResult(i, MainActv.REQUEST_CODE_REGISTER_ITEMS);
+
+		
+	}//public static void register_items(Activity actv)
 
 }//public class Methods

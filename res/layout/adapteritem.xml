@@ -1,17 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    
+    android:id="@+id/adapteritem_LL_root"
+    
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" android:id="@+id/adapteritem_LL_root">
+    
+    android:orientation="vertical"
+    
+	android:paddingBottom="5dp"
+	android:paddingLeft="5dp"
+	android:paddingRight="5dp"
+	android:paddingTop="5dp"
+    
+    
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:id="@+id/adapteritem_LL_item_name">
+        android:layout_height="wrap_content"
+
+        android:background="@color/white"
+        
+        android:id="@+id/adapteritem_LL_item_name"
+        
+        >
 
         <TextView
             android:id="@+id/adapteritem_tv_item_name"
+            
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:textSize="25dp"/>
+            android:layout_height="wrap_content"
+            
+			android:layout_marginBottom="3dp"
+			android:layout_marginTop="3dp"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+
+
+            android:background="@color/white"
+            
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            />
 
     </LinearLayout>
 

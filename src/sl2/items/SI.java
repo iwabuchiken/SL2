@@ -4,8 +4,11 @@ public class SI {
 
 	//
 	String store, name, genre, yomi;
+	
 	int price;
 	int id;
+	
+	long created_at, modified_at;
 	
 	//{"name", "yomi", "store", "price", "genre"}
 	public SI(
@@ -36,7 +39,25 @@ public class SI {
 		
 	}//public ShoppingItem(String store, String name, int price, String genre)
 
+	public SI(
+				String name, String yomi,String store,
+				int price, String genre, int id,
+				long created_at, long modified_at) {
 	
+		this.name = name;
+		this.yomi = yomi;
+		this.store = store;
+		
+		this.price = price;
+		this.genre = genre;
+		
+		this.id = id;
+		
+		this.created_at = created_at;
+		this.modified_at = modified_at;
+	
+	}//public ShoppingItem(String store, String name, int price, String genre)
+
 	public String getStore() {
 		return store;
 	}
