@@ -3,6 +3,7 @@ package sl2.utils;
 import java.util.List;
 
 import sl2.items.SI;
+import sl2.main.MainActv;
 import sl2.main.R;
 
 import android.content.Context;
@@ -61,12 +62,12 @@ public class ItemListAdapter extends ArrayAdapter<SI> {
         //
         SI si = (SI) getItem(position);
         
-        // Log
-		Log.d("ItemListAdapter.java" + "["
-				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-				+ "]", 
-				"si.getName() => " + si.getName()+
-					"/" + "id=" + si.getId());
+//        // Log
+//		Log.d("ItemListAdapter.java" + "["
+//				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//				+ "]", 
+//				"si.getName() => " + si.getName()+
+//					"/" + "id=" + si.getId());
 		
 		/*----------------------------
 		 * 4. Set values
@@ -82,6 +83,22 @@ public class ItemListAdapter extends ArrayAdapter<SI> {
 		/*----------------------------
 		 * 5. Set background
 			----------------------------*/
+		if (MainActv.inBasketItem.contains((Integer) position)) {
+			
+			convertView.setBackgroundColor(Color.GREEN);
+			
+		} else if (MainActv.chosenItem.contains((Integer) position)) {
+			
+			convertView.setBackgroundColor(Color.BLUE);
+			
+		} else {//if (MainActv.checkedPositions.contains((Integer) position))
+			
+			convertView.setBackgroundColor(Color.BLACK);
+			
+		}//if (MainActv.checkedPositions.contains((Integer) position))
+		
+
+		
 		
 		return convertView;
 //		return super.getView(position, convertView, parent);

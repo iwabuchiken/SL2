@@ -24,9 +24,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +74,9 @@ public class MainActv extends ListActivity {
 	public static List<SI> list;
 	
 	public static ItemListAdapter adapter;
+	
+	public static List<Integer> chosenItem;
+	public static List<Integer> inBasketItem;
 
 	/*********************************
 	 * Request codes
@@ -84,6 +90,8 @@ public class MainActv extends ListActivity {
     	/*********************************
 		 * 1. Set up
 		 * 2. Show list
+		 * 
+		 * 3. Initialize vars
 		 *********************************/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
@@ -97,11 +105,18 @@ public class MainActv extends ListActivity {
 		 *********************************/
         setList();
         
+        /*********************************
+		 * 3. Initialize vars
+		 *********************************/
+        chosenItem = new ArrayList<Integer>();
+        inBasketItem = new ArrayList<Integer>();
         
         /*----------------------------
 		 * 2. Add listeners
 			----------------------------*/
 //		add_listeners();
+        
+        //debug
 //        restore_db();
 //        see_db();
 //        get_column_names();
@@ -464,13 +479,73 @@ public class MainActv extends ListActivity {
 				R.layout.adapteritem,
 				list
 				);
-
+ 
 		/*********************************
 		 * 7. Set adapter
 		 *********************************/
 		setListAdapter(adapter);
 		
 	}//private void setList()
+
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		/*********************************
+		 * 0. super
+		 * 1. Vibrate
+		 * 2. chosenItem, inBasketItem
+		 * 
+		 * 3. Notify adapter 
+		 *********************************/
+		super.onListItemClick(l, v, position, id);
+
+		/*********************************
+		 * 1. Vibrate
+		 *********************************/
+		vib.vibrate(Methods.vibLength_click);
+		
+		/*********************************
+		 * 2. chosenItem
+		 *********************************/
+		if (inBasketItem.contains((Integer) position)) {
+			
+			inBasketItem.remove((Integer) position);
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Removed from inBasketItem: " + position);
+			
+		} else if (chosenItem.contains((Integer) position)) {
+
+			chosenItem.remove((Integer) position);
+			
+			// Log
+			Log.d("ItemList.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", 
+					"Position removed => " + 
+					position + "(size=" + chosenItem.size());
+			
+			
+		} else {//if (chosenItem.contains((Integer) position)
+
+			chosenItem.add((Integer) position);
+
+			// Log
+			Log.d("ItemList.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", 
+					"Position added => " + 
+					position + "(size=" + chosenItem.size());
+
+		}//if (chosenItem.contains((Integer) position)
+
+		/*----------------------------
+		 * 3. Notify adapter
+			----------------------------*/
+		adapter.notifyDataSetChanged();
+		
+	}//protected void onListItemClick(ListView l, View v, int position, long id)
 
 	private void sort_list(List<SI> list) {
 		/*********************************
@@ -507,11 +582,11 @@ public class MainActv extends ListActivity {
 //					
 //				} else {//if (s1.getYomi() != null && s2.getYomi() != null)
 					
-					// Log
-					Log.d("Methods.java"
-							+ "["
-							+ Thread.currentThread().getStackTrace()[2]
-									.getLineNumber() + "]", "else");
+//					// Log
+//					Log.d("Methods.java"
+//							+ "["
+//							+ Thread.currentThread().getStackTrace()[2]
+//									.getLineNumber() + "]", "else");
 					
 					return s1.getName().compareTo(s2.getName());
 					
@@ -568,21 +643,21 @@ public class MainActv extends ListActivity {
 		
 		for (int i = 0; i < c.getCount(); i++) {
 			//{"name", "yomi", "store", "price", "genre"}
-			// Log
-			Log.d("MainActv.java" + "["
-					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-					+ "]",
-					"c.getInt(0): " + c.getInt(0) + "/" +		// _id
-					"c.getLong(1): " + c.getLong(1) + "/" +		// created_at
-					"c.getLong(2): " + c.getLong(2) + "/" +		// modified_at
-					
-					"c.getString(3): " + c.getString(3) + "/" +	// name
-					"c.getString(4): " + c.getString(4) + "/" +	// yomi
-					"c.getString(5): " + c.getString(5) + "/" +		// store
-					
-					"c.getInt(6): " + c.getInt(6) + "/" +		// price
-					"c.getString(7): " + c.getString(7)			// genre
-					);
+//			// Log
+//			Log.d("MainActv.java" + "["
+//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//					+ "]",
+//					"c.getInt(0): " + c.getInt(0) + "/" +		// _id
+//					"c.getLong(1): " + c.getLong(1) + "/" +		// created_at
+//					"c.getLong(2): " + c.getLong(2) + "/" +		// modified_at
+//					
+//					"c.getString(3): " + c.getString(3) + "/" +	// name
+//					"c.getString(4): " + c.getString(4) + "/" +	// yomi
+//					"c.getString(5): " + c.getString(5) + "/" +		// store
+//					
+//					"c.getInt(6): " + c.getInt(6) + "/" +		// price
+//					"c.getString(7): " + c.getString(7)			// genre
+//					);
 			
 //			09-09 22:44:23.136: D/Methods.java[85](6668): col: _id
 //			09-09 22:44:23.136: D/Methods.java[85](6668): col: store
@@ -810,5 +885,13 @@ public class MainActv extends ListActivity {
 		
 		
 	}//protected void onActivityResult(int requestCode, int resultCode, Intent data)
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+		Methods.confirm_quit(this, keyCode);
+		
+		return super.onKeyDown(keyCode, event);
+	}
 
 }//public class MainActv extends ListActivity
